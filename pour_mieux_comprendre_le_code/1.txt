@@ -1,0 +1,31 @@
+-------------------------------
+Bjr Ms, j'aimerai vous présenter notre projet de scripting
+avec l'objectif de créer un script sauvegarde.sh permettant
+ de faire l’archive des fichiers de notre répertoire personnel.
+
+Maintenant on va commancer a l'execution sans aucun argument
+
+-------------------------------
+-g) on va faire maintenant l'execution de l'option g 
+cette option permet d’afficher un menu graphique donc voila
+l'affichage de la petit fenetre dont ou il ya toutes nos option
+
+
+--------------------
+-v)en suite on va executer l'option v qui nous permet 
+d'afficher ce design la , avec la version du code et 
+les autheurs qui sont Boubaker arij ey moi meme mekaoui yosra.
+
+
+------------------------------
+-a)on executon maintenant l'option (a) qui nous permet
+ d'archiver dans une « archive tar »tous les fichiers 
+de notre répertoire personnel qui ont été modifiés 
+dans les dernières 24heures.
+
+
+------------------------------
+-s) passant maintenat a l'execution de l'option s 
+dont ou il y a un fichier pour sauvegarder les informations
+ sur les fichier archivé dans un fichier passé en argument.
+

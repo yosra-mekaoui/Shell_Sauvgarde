@@ -1,0 +1,25 @@
+    
+         C'est un script "sauvegarde.sh" permettant de faire l’archive des fichiers de votre répertoire personnel .
+
+
+1/ Le script teste la présence d’au moins un argument, sinon il affiche l’usage sur la sortie d’erreur et échoue:
+" sauvegarde.sh: [-h] [-g] [-m] [-v] [-n]  [-r] [-a] [-s] chemin.." 
+
+2/ Le script contient des optiopns tel que : 
+
+	• -n : Pour afficher le nombre de fichier et la taille totale occupée des fichiers modifiés dans les dernières 24heures.
+
+	• -a : Pour archiver dans une « archive tar » tous les fichiers de votre répertoire personnel (/home/votre-nom) qui ont été modifiés dans les dernières 24 heures.
+
+	• -r : pour renommer l’archive avec la date et l’heure de la modification.
+
+	• -s pour sauvegarder les informations sur les fichier archivé (nom-type-droit d’accès-date et heure de modification) dans un fichier passé en argument.
+
+	• -m : pour afficher un menu textuel (en boucle) qui permet d’accéder à chaque fonction .
+
+	• -g : une fonction qui permet d’afficher un menu graphique avec plusieurs interface .
+	
+	• -v: Pour afficher le nom des auteurs et version du code.
+
+	• -h:  Pour afficher le help détaillé à partir d’un fichier texte .
+

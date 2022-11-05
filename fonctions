@@ -1,0 +1,348 @@
+#!/bin/bash
+
+#************************************************* Début *******************************************************************
+
+#Fonction show_usage s'affiche en cas d'erreur indiquant les options possible
+
+show_usage ()
+{
+	echo -e "\033[1m \033[31m sauvegarde.sh [-h] [-g]  [-m]  [-v]  [-n]  [-r]  [-a]  [-s] chemin ...   \033[31m " 
+}
+
+#****************************************************************************************************************************
+
+#Installation
+
+Installer()
+{
+if ! command -v yad &>/dev/null; then
+    echo "---------- Requirment-------------------"
+    echo "*yad Not found"
+    echo "installing wait"
+    sudo apt install yad
+fi
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour afficher le texte du help à partir d'un fichier avec cat 
+
+help_me()
+{
+	cat help_me.txt 
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour afficher le nombre de fichier et la taille totale occupée des fichiers modifiés dans les dernières 24heures
+
+calcul_nbre_taille_fichiers()
+{
+	echo -e "\033[1m \033[31m Le nombre des fichiers modifiés dans les dernières 24heures :    \033[1m \033[31m "  
+	echo $(find /home/arij_boubaker -mtime -1 -type f | wc -l  )
+	
+	echo -e "\033[1m \033[31m La taille totale des fichiers modifiés dans les dernières 24heures :   \033[1m \033[31m " 
+	echo $(find /home/arij_boubaker -mtime -1 -type f |du -sh )
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour archiver dans une « archive tar » tous les fichiers de votre répertoire personnel (/home/votre-nom) qui ont été modifiés dans les dernières 24 heures 
+
+Archiver()
+{
+	fichier=$OPTARG
+	
+	tar -czvf - `find /home/arij_boubaker -mtime -1 -type f -print` > $fichier.tar.gz	
+	clear
+	zenity --info --width=200 --height=100 --text "Répertoire $PWD sauvegardé dans un fichier archive sous le nom de $fichier.tar.gz"
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour renommer l’archive avec la date et l’heure de la modification 
+
+rename() 
+{
+	fichier=$OPTARG
+	if [ -e /home/arij_boubaker/Bureau/projet/$fichier ]
+	then
+	NOW="$(date -r "$fichier" "+%m-%d-%Y %H:%M:%S")"
+        mv "$fichier" "${NOW}.tar.gz"
+	zenity --info --width=200 --height=100 --text "Archive renommé avec succés"
+	else 
+	zenity --error --width=200 --height=100 --text "Aucun archive dans ce dossier"
+	fi      
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour afficher le nom des auteurs et version du code.
+
+author()
+{
+
+echo -e "███████╗██╗   ██╗     ██╗███████╗████████╗ ██╗  "
+echo -e "██╔════╝██║   ██║     ██║██╔════╝╚══██╔══╝███║  "
+echo -e "███████╗██║   ██║     ██║█████╗     ██║   ╚██║  "
+echo -e "╚════██║██║   ██║██   ██║██╔══╝     ██║    ██║  "
+echo -e "███████║╚██████╔╝╚█████╔╝███████╗   ██║    ██║  "
+echo -e "╚══════╝ ╚═════╝  ╚════╝ ╚══════╝   ╚═╝    ╚═╝  "
+
+echo -e "\033[1m\033[34mVersion : 1.0  \033[34m "   
+echo -e "\033[1m\033[34mAuteurs : Boubaker Arij & Mekkaoui Yosra  \033[34m "                                                          
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour sauvegarder les informations sur les fichier archivé (nom-type-droit d’accès-date et heure de modification) dans un fichier passé en argument
+
+SauvegarderInfos()
+{
+	fichier=$OPTARG
+	echo "" > $fichier 
+	sudo ls -l $(find /home/arij_boubaker -mtime -1 -type f) >> $fichier    
+	cat $fichier  
+	zenity --info --width=200 --height=100 --text "Les informations ont été bien sauvegardées dans $OPTARG"
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour afficher le texte du help à partir d'un fichier avec yad spéciale pour le menu graphique avec cat
+
+helpsyad()
+{
+	yad --title="Sujet1 : Boubaker Arij && Mekkaoui Yosra " --center --no-buttons  --text=" $(cat help_me.txt)"
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour afficher un menu graphique avec zenity
+
+Graphiquemenu()
+{
+option=0
+while [ $option -ne 9 ]
+do
+choix=$(zenity --width=550 --height=400 --list --column Select --column option 1 'n: Nombre et taille de fichiers modifiées les dérniéres 24h ' 2 'a: Archiver les fichiers modifiées les dérniéres 24h' 3 'r: Renommer cet archive'  4 's: Sauvegarder les informations sur les fichiers archivés' 5 'm: Afficher un menu textuel ' 6 'g: Afficher un menu graphique' 7 'v: Afficher le nom des auteurs et version du code' 8 'h: Help' 9 Quitter  --radiolist)
+case $choix in 
+'n: Nombre et taille de fichiers modifiées les dérniéres 24h ')
+option=1
+;;
+'a: Archiver les fichiers modifiées les dérniéres 24h')
+option=2
+;;
+'r: Renommer cet archive')
+option=3
+;;
+
+'s: Sauvegarder les informations sur les fichiers archivés')
+option=4
+;;
+'m: Afficher un menu textuel ') 
+option=5
+;;
+
+'g: Afficher un menu graphique')
+option=6
+;;
+
+'v: Afficher le nom des auteurs et version du code')
+option=7
+;;
+
+'h: Help')
+option=8
+;;
+
+
+Quitter)
+option=9
+;;
+
+esac
+REPLY=$option
+execution1 $REPLY
+done
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour afficher un menu textuel qui permet d’accéder à chaque fonction
+
+TextMenu ()
+{
+PS3="Votre choix:"
+select item in " n: Nombre et taille de fichiers modifiées les dérniéres 24h " " a: Archiver les fichiers modifiées les dérniéres 24h " " r: Renommer cet archive "  " s: Sauvegarder les informations sur les fichiers archivés " " m: Afficher un menu textuel " " g: Afficher un menu graphique" " v: Afficher le nom des auteurs et version du code" " h: Help" " q :Quitter"
+do
+echo "Vous avez chosi l'item $REPLY :$item"
+execution $REPLY
+done
+}
+
+#****************************************************************************************************************************
+
+#Fonction pour l'éxécution du menu textuel 
+
+execution()
+{
+case $REPLY in 
+
+n)
+	clear
+	echo -e "\e[1;92m Vous avez selectioner la fonction pour afficher le nombre de fichier et la taille totale occupée des fichiers modifiés dans les dernières 24heures :   \e[0m "  
+	calcul_nbre_taille_fichiers
+	TextMenu
+;;
+
+a)
+	clear
+	echo -e "\e[1;92m   Vous avez selectioner la fonction pour archiver tous les fichiers de votre répertoire personnel (/home/votre-nom) qui ont été modifiés dans les dernières 24 heures : \e[0m "  
+	read -p "Veuillez entrez un nom pour votre archive : " OPTARG
+	Archiver $OPTARG
+	TextMenu
+;;
+
+r)
+	clear
+	echo -e "\e[1;92m Vous avez selectioner la fonction pour renommer l’archive avec la date et l’heure de la modification : \e[0m "  
+	read -p "Donner le nom du fichier: " OPTARG
+	rename $OPTARG
+	TextMenu
+;;
+
+
+s)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour sauvegarder les informations sur le fichier archivé :  \e[0m "  
+	read -p "Veuillez entrez un nom pour votre fichier de sauvegarde : " OPTARG
+	SauvegarderInfos $OPTARG
+	TextMenu
+;;
+
+m)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher un menu textuel :  \e[0m "  
+	TextMenu
+;;
+
+g)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher un menu graphique :  \e[0m "  
+	Graphiquemenu
+;;
+
+v)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher le nom des auteurs et version du code : \e[0m "  
+	author
+	TextMenu
+;;
+
+h)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher le help détaillé :  \e[0m "  
+	help_me
+	TextMenu
+;;
+
+q)	
+	clear
+	echo -e "\e[1;92m ****************   \e[0m "  
+	echo -e "\e[1;92m Au revoir ($USER)   \e[0m "
+	echo -e "\e[1;92m A la prochaine   \e[0m "
+	echo -e "\e[1;92m ****************   \e[0m "
+	exit 0
+;;
+
+*)
+	clear
+	echo -e "\033[1m \033[31m Erreur! Votre choix ne figure pas dans la liste   \033[31m " 
+	TextMenu
+;;
+esac
+}
+#****************************************************************************************************************************
+
+#Fonction pour l'éxécution du menu graphique
+
+execution1()
+{
+case $REPLY in 
+
+1)
+	clear
+	echo -e "\e[1;92m Vous avez selectioner la fonction pour afficher le nombre de fichier et la taille totale occupée des fichiers modifiés dans les dernières 24heures :   \e[0m "  
+	calcul_nbre_taille_fichiers
+	Graphiquemenu
+;;
+
+2)
+	clear
+	echo -e "\e[1;92m   Vous avez selectioner la fonction pour archiver tous les fichiers de votre répertoire personnel (/home/votre-nom) qui ont été modifiés dans les dernières 24 heures : \e[0m " 
+	read -p "Veuillez entrez un nom pour votre archive : " OPTARG			
+	Archiver $OPTARG
+	Graphiquemenu
+;;
+
+3)
+	clear
+	echo -e "\e[1;92m Vous avez selectioner la fonction pour renommer l’archive avec la date et l’heure de la modification : \e[0m "
+	read -p "Donner le nom du fichier: " OPTARG
+	rename $OPTARG
+	Graphiquemenu
+;;
+
+
+4)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour sauvegarder les informations sur le fichier archivé :  \e[0m " 
+	read -p "Veuillez entrez un nom pour votre fichier de sauvegarde : " OPTARG
+	SauvegarderInfos $OPTARG
+	Graphiquemenu
+;;
+
+5)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher un menu textuel :  \e[0m "  
+	TextMenu
+;;
+
+6)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher un menu graphique :  \e[0m "  
+	Graphiquemenu
+;;
+
+7)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher le nom des auteurs et version du code : \e[0m "
+	author
+	Graphiquemenu
+;;
+
+8)
+	clear
+	echo -e "\e[1;92m  Vous avez selectioner la fonction pour afficher le help détaillé :  \e[0m "  
+	helpsyad
+	Graphiquemenu
+;;
+
+9)
+	clear
+	echo -e "\e[1;92m ****************   \e[0m "  
+	echo -e "\e[1;92m Au revoir ($USER)   \e[0m "
+	echo -e "\e[1;92m A la prochaine   \e[0m "
+	echo -e "\e[1;92m ****************   \e[0m "
+	exit 0
+;;
+
+*)
+	clear 
+	echo -e "\033[1m \033[31m Erreur! Votre choix ne figure pas dans la liste   \033[31m "
+	Graphiquemenu
+;;
+esac
+}
+#********************************************** FIN ***************************************************************
+

@@ -1,0 +1,6 @@
+#!/bin/bash 
+chaine=helloWorld
+echo `expr "$chaine" : '.*\(.....\)'`   
+
+
+

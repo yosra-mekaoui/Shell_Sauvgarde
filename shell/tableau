@@ -1,0 +1,11 @@
+#!/bin/bash
+tableau=( ahmed ali mariem soulaima salim )
+echo ${tableau[0]}
+echo ${tableau[1]}
+tableau[${#tableau[*]}]=tarek
+tableau[${#tableau[*]}]=samer
+echo ${#tableau[*]} #nombre de case
+echo ${tableau[*]} #affichage
+tableau=( délégué  ${tableau[*]} )
+echo ${tableau[*]} #affichage
+

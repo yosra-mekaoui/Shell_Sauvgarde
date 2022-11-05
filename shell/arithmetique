@@ -1,0 +1,13 @@
+#!/bin/bash
+u=2
+v=3
+w=`expr $u + $v`
+echo $w 
+w=`expr $u - $v`
+echo $w 
+w=`expr $u \* $v`
+echo $w 
+w=`expr $u / $v`
+echo $w 
+w=`expr $u % $v`
+echo $w 

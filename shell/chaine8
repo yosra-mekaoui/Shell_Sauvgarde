@@ -1,0 +1,10 @@
+#!/bin/bash 
+chaine=helloWorld
+
+echo ${chaine/World/esprit}          
+                                  #  Remplace la première correspondance de
+                                  #+ 'World' avec 'esprit'.
+
+echo ${chaine//World/esprit}         
+                                  #  Remplace toutes les correspondances de
+                                  #+ 'World' avec 'esprit'.

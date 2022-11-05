@@ -1,0 +1,7 @@
+#!/bin/bash 
+chaine=helloWorld
+#      |-----|
+#       12345
+
+echo `expr match "$chaine" '.....'`   # 5
+echo `expr "$chaine" : '[a-z][a-z]ll.'`       # 5

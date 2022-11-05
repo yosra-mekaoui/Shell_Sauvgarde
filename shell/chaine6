@@ -1,0 +1,10 @@
+#!/bin/bash 
+chaine=helloworld
+#      |----|
+#      |------|
+
+echo ${chaine#h*o}      
+# Supprime la plus petite correspondance entre 'h' et 'o'.
+
+echo ${chaine##h*o}     # abc
+# Supprime la plus grande correspondance entre 'h' et 'o'.

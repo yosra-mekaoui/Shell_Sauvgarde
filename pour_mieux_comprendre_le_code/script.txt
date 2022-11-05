@@ -1,0 +1,61 @@
+La commande interne select est une structure de contrôle de type boucle qui permet
+d'afficher de manière cyclique un menu.
+La liste des items sera affichée à l'écran à chaque tour de boucle.
+Les items sont indicés automatiquement.
+La variable var sera initialisée avec l'item correspondant au choix de l'utilisateur.
+
+
+
+? La commande interne getopts permet à un script
+d'anayser les options passées en argument.
+Chaque appel à la commande getopts analyse l'option
+suivante de la ligne de commande.
+Pour vérifier la validité de chacune des options, il faut
+appeler getopts à partir d'une boucle.
+************************************************
+
+"si [$ # -ne 0 -a $ # -ne 1];" :
+si vérifie la condition spécifiée
+' [ ' et ' ] ' agissent comme une notation abrégée pour la commande de test
+-eq egal
+$ # a le nombre d'arguments passés.
+-a signifie opération «ET».
+donc en anglais simple c'est:
+"si le nombre d'arguments est égal à 0 
+entrez dans le bloc de condition if du code. "
+------
+Comment -e, -ne, etc. sont-ils appelés dans le script bash?
+Ce sont des arguments des commandes intégrées "test" (et "[" et "[[").
+*********************
+fi # closure of the 'if' conditional
+
+Le motfi(ifà l'envers !) à la fin indique que leifs'arrête là. Tout ce qui est entre lethenet lefisera exécuté uniquement si le test est vérifié.
+
+******************************
+Vous pouvez utiliser la commande cat pour ajouter des données
+ ou du texte à un fichier.
+ La commande cat peut également ajouter des données binaires.
+ Le but principal de la commande cat est d' afficher
+ des données à l'écran (stdout) ou de concaténer 
+des fichiers sous Linux ou Unix comme les systèmes d'exploitation. 
+Pour ajouter une seule ligne, vous pouvez utiliser la commande echoou printf.
+
+
+
+
+-------------------------------------------------------
+
+
+PATH : une liste des répertoires qui contiennent des exécutables que vous souhaitez pouvoir lancer sans indiquer leur répertoire. 
+Nous en avons parlé un peu plus tôt. Si un programme se trouve dans un de ces dossiers, vous pourrez l'invoquer quel que soit le dossier dans lequel vous vous trouvez ;
+
+**************************
+$*	contient tous les arguments passés à la fonction
+$#	contient le nombre d'arguments
+$?	contient le code de retour de la dernière opération
+$0	contient le nom du script
+$n	contient l'argument n, n étant un nombre
+$!	contient le PID de la dernière commande lancée
+
+
+

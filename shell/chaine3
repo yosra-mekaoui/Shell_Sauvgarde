@@ -1,0 +1,4 @@
+#!/bin/bash 
+chaine=helloWorld
+echo ${chaine:5:5}
+

@@ -1,0 +1,6 @@
+#!/bin/bash 
+chaine=abcABC123ABCabc
+
+echo ${#chaine}                 # 15
+echo `expr length $chaine`      # 15
+echo `expr "$chaine" : '.*'`    # 15

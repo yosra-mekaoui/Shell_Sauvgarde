@@ -1,0 +1,5 @@
+#!/bin/bash 
+chaine=helloWorld
+#       123456 ...
+            
+echo `expr index "$chaine" W`              

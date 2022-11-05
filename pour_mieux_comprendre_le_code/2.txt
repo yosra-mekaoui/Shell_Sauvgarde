@@ -1,0 +1,40 @@
+---------------show-usage --------------------
+
+et voila ici il y a la fonction show-u qui permet d'afficher sur la sortie standard 
+nos option , ,,on utilison un simple affichage avec echo , on a fait l'appel de cette 
+fonction,
+il ya une condition avec if pour vérifier si l'utilisateur a des arguments ou pas
+------------------archive--------------------------
+
+passons maintenat a la fonction archiver qui prend en parametre OPTARG 
+qui deja entrer par l'utlisateur on faite cette option permet d'archiver tous 
+les ficher de votre repertoire personnel qui ont ete modifier dans les dérniere 24h 
+grace a la commande tar -czvf  et on fait la recherche avec le find et -mtime pour 
+chercher selon la date de dérnier modification  dans un jour.
+clear pour effacer le contenue
+zenity pour afficher une boite de dialoge on indiqon que le répertoire est sauvgardé 
+dans un fichier archive sous le nom que l'utlisateur a l'entrer
+
+----------------------sauvegarde-------------------------------------
+c'est a l'utilisateur de choissir le nom de son fichier,
+la on a un variable dans la quel on a sauvegarder notre argument a fin de gener se
+fichier en ajouton une chaine vide , et avec     ls - l    on va sauvegarder tous les info 
+on relation avec les fichier deja modifier dans le 24h ,
+cat $fichier pour l'affichage sur le consol
+zenity pour afficher une boite de dialoge on indiquant que les information ont
+été bien sauvegardées
+
+------------------Menu Graphique---------------------------------------
+on a ici la variable option qui contient 0, la on va faire un test sur cette option ,
+puisque l'option n'est pas egale a 9 on va faire un choix avec zenity    ,   
+    on a une liste d'option ,   et la voila la seule différance avec zenity c'est au niveau 
+du choix qui ce fait avec toute une chaine,    
+       et apres on autilison le case pour tester le choix et a chaque foix on a affectuer 
+une valeur  a option ..... et  finalemant   a la fin du case on a sauvegarder la reponse 
+du l'utilisateur et on va l'executer
+--------------------------execution-----------------------------------
+c'est avec le meme principe pour la fonction execution 
+---------------------------- *) --------------------------------
+Finalemnent , si l'utilisateur a écrire une option qui n'existe pas un msg d'erreur
+ sera afficher et un autre appel a la fonction show-usage qui presente
+ les option possible

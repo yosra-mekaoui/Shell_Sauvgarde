@@ -1,0 +1,6 @@
+#!/bin/bash 
+read -p 'Entrez votre nom : ' nom 
+read -p 'Entrez votre prenom : ' prenom 
+read -p 'Entrez votre age : ' age
+echo "  $nom $prenom $age "
+
